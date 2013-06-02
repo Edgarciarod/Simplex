@@ -3,17 +3,76 @@
 __author__ = 'edgar'
 
 
+operadores = ["=", "+", "-", "*"]
+
+
 def parseObjectiveFunction(objectiveFunction):
+    """
+    Esta funcion toma la funcion objetivo;('p = 0.5*x + 3*y + z + 4*w')
+    devuelve la lista de sus variable en oroden i.e ['x1', 'x2', 'x3']
+    sus coeficientes i.e [1.0, 3.9, 0.0]
+    y la variable a optimizar i.e 'z'
+    """
     listOfVariables = []
     vectorOfProblem = []
-    return listOfVariables, vectorOfProblem
+
+    i = 0
+    tmp_variable = ""
+    varOptimizable = ""
+
+    while True:  # Este while saca la variable a optimizar
+        if objectiveFunction[i] == ' ':  # tira los espacios
+            i += 1
+            continue
+        elif objectiveFunction[i] == '=':
+            i += 1
+            break
+        else:
+            varOptimizable += objectiveFunction[i]
+            i += 1
+        if i > len(objectiveFunction):
+            return None
+
+    signo = 1
+    while i < len(objectiveFunction):  # saca las variables y sus coeficientes
+        if objectiveFunction[i] == ' ':
+            i += 1
+            continue
+        elif objectiveFunction[i] == '*':
+            vectorOfProblem.append(signo*float(tmp_variable))
+            tmp_variable = ""
+            signo = 1
+        elif objectiveFunction[i] == '-':
+            signo = -1
+            if len(listOfVariables) == len(vectorOfProblem) and len(vectorOfProblem) != 0:
+                if len(tmp_variable) == 0:
+                    return None
+                vectorOfProblem.append(float(signo))
+            elif len(listOfVariables) == len(vectorOfProblem) and len(vectorOfProblem) == 0:
+                signo = -1
+                i += 1
+                continue
+            listOfVariables.append(tmp_variable)
+            tmp_variable = ""
+        elif objectiveFunction[i] == '+':
+            signo *= 1
+            if len(listOfVariables) == len(vectorOfProblem):
+                vectorOfProblem.append(float(signo))
+            listOfVariables.append(tmp_variable)
+            tmp_variable = ""
+        else:
+            tmp_variable += objectiveFunction[i]
+        i += 1
+    listOfVariables.append(tmp_variable)
+
+    return listOfVariables, vectorOfProblem, varOptimizable
 
 
 def parseProblem(myProblem):
     """
     Esta función toma una cadena de la formma
 
-    "Maximize p = 0.5*x + 3*y + z + 4*w
+    "Maximize p = -0.5*x + 3*y + z + 4*w
     x + y + z + w <= 40
     2*x + y - z - w >= 10
     w - y >= 10"
@@ -40,13 +99,16 @@ def parseProblem(myProblem):
     myProblem = [token.strip(" ") for token in myProblem.strip(" ").split("\n")]
     kindOfProblem, aux,  problem = myProblem[0].partition(" ")
     kindOfProblem = kindOfProblem.strip(" ")
-    print(kindOfProblem, problem)
-    listOfVariables, vectorOfProblem = parseObjectiveFunction(problem)
+    #print(kindOfProblem, problem)
+    try:
+        listOfVariables, vectorOfProblem, varOptimizable = parseObjectiveFunction(problem)
+    except TypeError:
+        return None
 
-    return kindOfProblem, listOfVariables, vectorOfProblem, myProblem
+    return kindOfProblem, listOfVariables, vectorOfProblem, varOptimizable, myProblem
 
 if __name__ == "__main__":
-    problem_test_string = "Maximize p = 0.5*x + 3*y + z + 4*w \n\
+    problem_test_string = "Maximize p = -30.5*x - 3*y + z + 4*w \n\
     x + y + z + w <= 40\n\
     2*x + y - z - w >= 10\n\
     w - y >= 10"
