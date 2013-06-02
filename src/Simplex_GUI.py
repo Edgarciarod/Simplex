@@ -12,6 +12,8 @@ pygtk.require("2.0")
 import gtk
 import gtk.glade
 
+from SimplexParser import *
+
 
 class MainWin:
     def __init__(self):
@@ -37,7 +39,8 @@ class MainWin:
 
     def on_Solve_clicked(self, widget):
         texto = self.Entrada.get_buffer().get_text(self.Entrada.get_buffer().get_start_iter(), self.Entrada.get_buffer().get_end_iter())
-        arg_Entrada = Parseado(texto)
+        arg_Entrada = parseProblem(texto)
+        print arg_Entrada
         # self.Salida.get_buffer().set_text("%d" % self.Entrada.get_buffer().get_line_count())
 
     def on_Clear_clicked(self, widget):
