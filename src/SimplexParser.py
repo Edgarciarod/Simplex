@@ -6,7 +6,7 @@ __author__ = 'edgar'
 operadores = ["=", "+", "-", "*"]
 
 
-def parseObjectiveFunction(objectiveFunction):
+def parseObjectiveFunction(kind, objectiveFunction):
     """
     Esta funcion toma la funcion objetivo;('p = 0.5*x + 3*y + z + 4*w')
     devuelve la lista de sus variable en oroden i.e ['x1', 'x2', 'x3']
@@ -67,6 +67,9 @@ def parseObjectiveFunction(objectiveFunction):
             tmp_variable += objectiveFunction[i]
         i += 1
     listOfVariables.append(tmp_variable)
+
+    if kind == "Minimize":
+        vectorOfProblem = [-i for i in vectorOfProblem]
 
     return listOfVariables, vectorOfProblem, varOptimizable
 
@@ -181,7 +184,7 @@ def parseProblem(myProblem):
     kindOfProblem = kindOfProblem.strip(" ")
     #print(kindOfProblem, problem)
     try:
-        listOfVariables, vectorOfProblem, varOptimizable = parseObjectiveFunction(problem)
+        listOfVariables, vectorOfProblem, varOptimizable = parseObjectiveFunction(kindOfProblem, problem)
     except :
         return None
     try:

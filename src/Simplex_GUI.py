@@ -13,6 +13,7 @@ import gtk
 import gtk.glade
 
 from SimplexParser import *
+from ParsingToFile import *
 
 
 class MainWin:
@@ -41,6 +42,7 @@ class MainWin:
         texto = self.Entrada.get_buffer().get_text(self.Entrada.get_buffer().get_start_iter(), self.Entrada.get_buffer().get_end_iter())
         arg_Entrada = parseProblem(texto)
         print arg_Entrada
+        ParsingToFile(arg_Entrada)
         # self.Salida.get_buffer().set_text("%d" % self.Entrada.get_buffer().get_line_count())
 
     def on_Clear_clicked(self, widget):

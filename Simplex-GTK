@@ -1,0 +1,6 @@
+#! /bin/bash
+
+cd src
+echo -e "Empezando...\n"
+python  Simplex_GUI.py &> /dev/null
+echo -e "Saliendo...\n\n"
