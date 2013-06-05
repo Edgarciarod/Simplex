@@ -427,7 +427,7 @@ Por último mostramos, en la siguiente figura, el comportamiento de nuestro
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -470,6 +470,159 @@ Pantalla de error de formato
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section
+Sobre la Implementación del Algoritmo Simplex
+\end_layout
+
+\begin_layout Standard
+El núcleo del programa trabaja de la siguiente manera:
+\end_layout
+
+\begin_layout Itemize
+Siempre maximiza la función objetivo.
+\end_layout
+
+\begin_layout Itemize
+Implementa el método de la Gran 'M'.
+\end_layout
+
+\begin_layout Itemize
+La función recibe: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Un vector con los coeficientes de la función objetivo, donde el 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$i$
+\end_layout
+
+\end_inset
+
+-ésimo elemento corresponde al coeficiente de la 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$i$
+\end_layout
+
+\end_inset
+
+-ésima variable.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Una matriz, donde el elemento 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$(i,j)$
+\end_layout
+
+\end_inset
+
+ corresponde al coeficiente de la 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$j$
+\end_layout
+
+\end_inset
+
+-ésima variable en la 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$i$
+\end_layout
+
+\end_inset
+
+-ésima restricción.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Una matriz, donde el elemento 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$(i,0)$
+\end_layout
+
+\end_inset
+
+ corresponde al coeficiente de la 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$i$
+\end_layout
+
+\end_inset
+
+-ésima restricción y el elemento 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$(i,1)$
+\end_layout
+
+\end_inset
+
+ es un -1 si la restricción es un menor qué, un 0 si es un igual qué o un
+ 1 si es un mayor qué.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+La función regresa: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Un vector donde el primer elemento corresponde al valor de la función objetivo
+ y el elemento 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$(i+1)$
+\end_layout
+
+\end_inset
+
+-ésimo corresponde al valor de la i-ésima variable.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+La entrada y salida de nuestro código Simplex es analizada por un código
+ intermediaro implementado en Python que se encarga de darle el formato
+ deseado.
 \end_layout
 
 \end_body
