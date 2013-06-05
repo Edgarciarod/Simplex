@@ -2,5 +2,5 @@
 
 cd src
 echo -e "Empezando...\n"
-python  Simplex_GUI.py &> /dev/null
+python  Simplex_GUI.py
 echo -e "Saliendo...\n\n"

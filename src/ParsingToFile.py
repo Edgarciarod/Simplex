@@ -9,7 +9,7 @@ def ParsingToFile(arg_Entrada):
     file.write(str(len(arg_Entrada[1])) + " " + str(len(arg_Entrada[4])) + "\n")
 
     for i in arg_Entrada[2]:
-        file.write( str(i)+" ")
+        file.write(str(i) + " ")
 
     file.write("\n")
     k = 0

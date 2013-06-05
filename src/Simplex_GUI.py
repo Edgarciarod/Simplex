@@ -42,8 +42,8 @@ class MainWin:
         self.Entrada = self.widgets.get_widget("Entrada")
 
     def on_Example_clicked(self, widget):
-        problem_test_string = "Maximize p = -0.5*x - 3*y + z + 4*w \n\
--x + y + z + w <= 40\n\
+        problem_test_string = "Maximize p = -0.5*x + 3*y + z + 4*w \n\
+x + y + z + w <= 40\n\
 2*x + y - z - w >= 10\n\
 2*w - y = 10"
         self.Entrada.get_buffer().set_text(problem_test_string)
@@ -51,13 +51,18 @@ class MainWin:
     def on_Solve_clicked(self, widget):
         texto_Entrada = self.Entrada.get_buffer().get_text(self.Entrada.get_buffer().get_start_iter(), self.Entrada.get_buffer().get_end_iter())
         arg_Entrada = parseProblem(texto_Entrada)
-        print arg_Entrada
-        ParsingToFile(arg_Entrada)
-        call(["../bin/Simplex"])
-        arg_Salida = getDataSalida()
-        print arg_Salida
-        texto_Salida = ParsingToOutput(arg_Entrada, arg_Salida)
-        self.Salida.get_buffer().set_text(texto_Salida)
+        if arg_Entrada is None:
+            self.Salida.get_buffer().set_text("Tu formato de entrada es incorrecto")
+        else:
+            print arg_Entrada
+            ParsingToFile(arg_Entrada)
+            if call(["timeout","2", "../bin/Simplex"]) != 0:
+                self.Salida.get_buffer().set_text("No hay solución óptima para este problema")
+            else:
+                arg_Salida = getDataSalida()
+                print arg_Salida
+                texto_Salida = ParsingToOutput(arg_Entrada, arg_Salida)
+                self.Salida.get_buffer().set_text(texto_Salida)
 
     def on_Clear_clicked(self, widget):
         self.Entrada.get_buffer().delete(self.Entrada.get_buffer().get_start_iter(), self.Entrada.get_buffer().get_end_iter())
