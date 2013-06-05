@@ -14,7 +14,9 @@ import gtk.glade
 
 from SimplexParser import *
 from ParsingToFile import *
-
+from getDataSalida import *
+from ParsingToOutput import *
+from subprocess import call
 
 class MainWin:
     def __init__(self):
@@ -39,11 +41,15 @@ class MainWin:
         self.Entrada = self.widgets.get_widget("Entrada")
 
     def on_Solve_clicked(self, widget):
-        texto = self.Entrada.get_buffer().get_text(self.Entrada.get_buffer().get_start_iter(), self.Entrada.get_buffer().get_end_iter())
-        arg_Entrada = parseProblem(texto)
+        texto_Entrada = self.Entrada.get_buffer().get_text(self.Entrada.get_buffer().get_start_iter(), self.Entrada.get_buffer().get_end_iter())
+        arg_Entrada = parseProblem(texto_Entrada)
         print arg_Entrada
         ParsingToFile(arg_Entrada)
-        # self.Salida.get_buffer().set_text("%d" % self.Entrada.get_buffer().get_line_count())
+        call(["../bin/Simplex"])
+        arg_Salida = getDataSalida()
+        print arg_Salida
+        texto_Salida = ParsingToOutput(arg_Entrada, arg_Salida)
+        self.Salida.get_buffer().set_text(texto_Salida)
 
     def on_Clear_clicked(self, widget):
         self.Entrada.get_buffer().delete(self.Entrada.get_buffer().get_start_iter(), self.Entrada.get_buffer().get_end_iter())

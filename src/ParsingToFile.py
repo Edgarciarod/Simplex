@@ -16,5 +16,5 @@ def ParsingToFile(arg_Entrada):
     for i in arg_Entrada[4]:
         for j in i:
             file.write(str(j)+" ")
-        file.write(str(arg_Entrada[5][k]) + "\n")
+        file.write(str(arg_Entrada[6][k]) + " " + str(arg_Entrada[5][k]) + "\n")
         k += 1
