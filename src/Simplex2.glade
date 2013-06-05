@@ -55,11 +55,12 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="Graphic">
-                <property name="label" translatable="yes">Graficar</property>
+              <widget class="GtkButton" id="Example">
+                <property name="label" translatable="yes">Ejemplo</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_Example_clicked" swapped="no"/>
               </widget>
               <packing>
                 <property name="expand">False</property>

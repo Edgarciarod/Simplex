@@ -30,6 +30,7 @@ class MainWin:
         # glade y su respectivo método (o llamada)
         signals = { "on_Solve_clicked" : self.on_Solve_clicked,
                     "on_Clear_clicked" : self.on_Clear_clicked,
+                    "on_Example_clicked" : self.on_Example_clicked,
                     "gtk_main_quit" : gtk.main_quit }
 
         # Luego se auto-conectan las señales.
@@ -39,6 +40,13 @@ class MainWin:
         # utilizar (en este caso son label1 y entry1)
         self.Salida = self.widgets.get_widget("Salida")
         self.Entrada = self.widgets.get_widget("Entrada")
+
+    def on_Example_clicked(self, widget):
+        problem_test_string = "Maximize p = -0.5*x - 3*y + z + 4*w \n\
+-x + y + z + w <= 40\n\
+2*x + y - z - w >= 10\n\
+2*w - y = 10"
+        self.Entrada.get_buffer().set_text(problem_test_string)
 
     def on_Solve_clicked(self, widget):
         texto_Entrada = self.Entrada.get_buffer().get_text(self.Entrada.get_buffer().get_start_iter(), self.Entrada.get_buffer().get_end_iter())
