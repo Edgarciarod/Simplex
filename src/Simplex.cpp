@@ -52,8 +52,8 @@ void print(vector< vector<double> > cuadro, int numv, int numc, int columnas, in
 
 int main()
 {
-    freopen("/home/david/Documents/Optimizacion/Simplex/data/Entrada.in","r",stdin);
-    freopen("/home/david/Documents/Optimizacion/Simplex/data/Salida.out","w",stdout);
+    freopen("../data/Entrada.in","r",stdin);
+    freopen("../data/Salida.out","w",stdout);
     int numv=2, numr=1;
 
     cin>>numv>>numr;
@@ -235,7 +235,6 @@ void opeSimplex(vector< vector<double> > &cSim, vector<bool> &vSim, luz &valid, 
                 for(int j=0; j<=columnas; j++)
                     cSim[i][j]=cSim[i][j]-vs*cSim[fil][j];
         }
-
         if(cSim[numr][columnas]<valid.value && pivote(cSim, vSim, numv, numr, numa, columnas, fil, col, val)==true)
         {
             for(int i=0; i<=columnas; i++)
@@ -274,8 +273,13 @@ bool pivote(vector< vector<double> > cSim, vector<bool> &vSim, int numv, int num
 
     if(val<0)
     {
-        fil=0;
-        val=fabs(cSim[0][columnas]/cSim[0][col]);
+        if(!vSim[0])
+        {
+            fil=0;
+            val=fabs(cSim[0][columnas]/cSim[0][col]);
+        }
+        else
+            val=M;
         for(int i=1; i<numr; i++)
         {
             if(fabs(cSim[i][columnas]/cSim[i][col])<val && !vSim[i])
@@ -285,7 +289,7 @@ bool pivote(vector< vector<double> > cSim, vector<bool> &vSim, int numv, int num
             }
         }
         val=cSim[fil][col];
-        vSim[fil]=true;
+        //vSim[fil]=true;
 
         return true;
     }
